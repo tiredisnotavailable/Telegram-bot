@@ -3,9 +3,8 @@ package TgBot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.telegram.telegrambots.ApiContextInitializer;
 
-@ComponentScan(basePackages = "TgBot.Bot")
+@ComponentScan(basePackages = "TgBot")
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {

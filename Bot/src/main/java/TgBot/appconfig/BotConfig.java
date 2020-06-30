@@ -5,10 +5,8 @@ import lombok.Setter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.telegram.telegrambots.bots.DefaultBotOptions;
-import org.telegram.telegrambots.meta.ApiContext;
 
-import TgBot.Bot;
+import TgBot.bot.Bot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -20,12 +18,7 @@ public class BotConfig {
 
     @Bean
     public Bot bot() {
-        DefaultBotOptions options = ApiContext.getInstance(DefaultBotOptions.class);
-        options.setProxyHost(proxyHost);
-        options.setProxyPort(proxyPort);
-        options.setProxyType(proxyType);
-
-        Bot bot = new Bot(options);
+        Bot bot = new Bot();
         bot.setBotToken(botToken);
         bot.setBotUserName(botUserName);
         bot.setWebHookPath(webHookPath);
@@ -35,7 +28,4 @@ public class BotConfig {
     private String webHookPath;
     private String botUserName;
     private String botToken;
-    private DefaultBotOptions.ProxyType proxyType;
-    private String proxyHost;
-    private int proxyPort;
 }

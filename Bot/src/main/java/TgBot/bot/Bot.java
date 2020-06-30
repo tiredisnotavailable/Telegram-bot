@@ -1,4 +1,4 @@
-package TgBot;
+package TgBot.bot;
 
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
@@ -14,6 +14,9 @@ public class Bot extends TelegramWebhookBot {
 
     }
 
+    public Bot() {
+    }
+
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if (update.getMessage() != null && update.getMessage().hasText()) {
@@ -25,6 +28,7 @@ public class Bot extends TelegramWebhookBot {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
 
