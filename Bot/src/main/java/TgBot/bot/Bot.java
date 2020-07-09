@@ -1,35 +1,34 @@
 package TgBot.bot;
 
-import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Bot extends TelegramWebhookBot {
 
-    public Bot(DefaultBotOptions options) {
-        super(options);
-
-    }
-
-    public Bot() {
+    public Bot(MessageHandler messageHandler) {
+        this.messageHandler = messageHandler;
     }
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        if (update.getMessage() != null && update.getMessage().hasText()) {
-            long chatId = update.getMessage().getChatId();
+        log.info("webHookUpdate");
+        SendMessage replyMessageToUser = messageHandler.handleUpdate(update);
 
-            try {
-                execute(new SendMessage(chatId, "Hi, " + update.getMessage().getFrom().getFirstName()));
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+        return replyMessageToUser;
+    }
+
+    public void SendMsg(String text, Long chatId) {
+        try {
+            execute(new SendMessage(chatId, text));
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
-
-        return null;
     }
 
     public void setWebHookPath(String webHookPath) {
@@ -59,6 +58,7 @@ public class Bot extends TelegramWebhookBot {
         return webHookPath;
     }
 
+    private MessageHandler messageHandler;
     private String webHookPath;
     private String botToken;
     private String botUserName;

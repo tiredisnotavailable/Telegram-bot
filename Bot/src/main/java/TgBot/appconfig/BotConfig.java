@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import TgBot.bot.Bot;
+import TgBot.bot.MessageHandler;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -17,8 +18,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class BotConfig {
 
     @Bean
-    public Bot bot() {
-        Bot bot = new Bot();
+    public Bot bot(MessageHandler messageHandler) {
+        Bot bot = new Bot(messageHandler);
         bot.setBotToken(botToken);
         bot.setBotUserName(botUserName);
         bot.setWebHookPath(webHookPath);
